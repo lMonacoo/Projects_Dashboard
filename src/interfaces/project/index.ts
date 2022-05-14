@@ -6,3 +6,7 @@ export interface IProject {
   description: string;
   owner: IUsers;
 }
+
+export interface IProjectSlice {
+  allProjects: IProject[];
+}
