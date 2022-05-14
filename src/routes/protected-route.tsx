@@ -1,11 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { ROUTES } from '~/constants';
+import { useAppSelector } from '~/hooks';
 
 const ProtectedRoutes = (): JSX.Element => {
-  const auth = true;
+  const { currentUser } = useAppSelector(state => state.user);
 
-  return auth ? <Outlet /> : <Navigate to={ROUTES.LOGIN} />;
+  return currentUser ? <Outlet /> : <Navigate to={ROUTES.LOGIN} />;
 };
 
 export default ProtectedRoutes;

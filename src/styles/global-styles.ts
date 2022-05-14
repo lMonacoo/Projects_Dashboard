@@ -18,7 +18,8 @@ html {
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: rgba(172, 224, 234, 0.2);
+    background: ${({ theme }) => theme.colors.greenPrimary};
+    min-height: 100vh;
 }
 
 button, input[type="checkbox"] {

@@ -1,16 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IUsers, IUserSlice } from '~/interfaces';
+import { ILocalUser, IUsers, IUserSlice } from '~/interfaces';
 import initialUsers from '~/store/features/user/mock';
 
 const initialState: IUserSlice = {
-  allUsers: initialUsers
+  allUsers: initialUsers,
+  currentUser: null
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    login: (state, action: PayloadAction<ILocalUser>) => {
+      state.currentUser = action.payload;
+    },
+    logout: state => {
+      state.currentUser = null;
+    },
     addUser(state, action: PayloadAction<IUsers>) {
       state.allUsers.push(action.payload);
     },
@@ -21,5 +28,5 @@ const userSlice = createSlice({
   }
 });
 
-export const { addUser, removeUser } = userSlice.actions;
+export const { login, logout, addUser, removeUser } = userSlice.actions;
 export default userSlice.reducer;

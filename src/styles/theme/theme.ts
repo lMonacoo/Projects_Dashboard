@@ -11,7 +11,8 @@ const colors = {
   greyQuaternary: '#808080',
   redPrimary: '#D64747',
   greenSuccess: '#289D59',
-  transparent: 'transparent'
+  transparent: 'transparent',
+  bg: 'rgba(172, 224, 234, 0.2)'
 };
 
 type Colors = typeof colors;
