@@ -3,3 +3,7 @@ export interface IUsers {
   name: string;
   email: string;
 }
+
+export interface IUserSlice {
+  allUsers: IUsers[];
+}
