@@ -13,6 +13,7 @@ import { DashboardDialogProps, DialogFormValuesProject, DialogFormValuesUser } f
 
 export const DashboardDialog = ({ isOpen, onClose, onSubmit, variant }: DashboardDialogProps) => {
   const { projectDialogData, userDialogData } = useAppSelector(state => state.dashboard);
+  const { allUsers } = useAppSelector(state => state.user);
 
   const formValuesInitialState = () => {
     if (variant === 'users') {
@@ -25,9 +26,15 @@ export const DashboardDialog = ({ isOpen, onClose, onSubmit, variant }: Dashboar
   };
 
   const [formValues, setFormValues] = useState(formValuesInitialState());
+  const [formErrors, setFormErrors] = useState({});
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    if (variant === 'users') {
+      const userData = formValues as DialogFormValuesUser;
+      const hasEqualEmail = allUsers.some(user => user.email === userData.email);
+      if (hasEqualEmail) return setFormErrors({ email: 'Email already exists' });
+    }
     onSubmit(formValues);
   };
 
@@ -38,6 +45,7 @@ export const DashboardDialog = ({ isOpen, onClose, onSubmit, variant }: Dashboar
   const variantContent = {
     users: () => (
       <CustomDialogContentUser
+        formErrors={formErrors}
         formValues={formValues as DialogFormValuesUser}
         setFormValues={setFormValues}
       />

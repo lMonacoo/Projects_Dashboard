@@ -11,7 +11,8 @@ import { CustomDialogContentUserProps } from '~/interfaces';
 
 export const CustomDialogContentUser = ({
   formValues,
-  setFormValues
+  setFormValues,
+  formErrors
 }: CustomDialogContentUserProps) => {
   const { colors } = useTheme();
 
@@ -66,12 +67,16 @@ export const CustomDialogContentUser = ({
           value={formValues.email}
           onChange={handleInputChange}
           sx={{ ...inputStyle }}
+          error={!!formErrors?.email}
           startAdornment={
             <InputAdornment position='end'>
               <EmailIcon sx={{ fill: colors.greenTertiary }} />
             </InputAdornment>
           }
         />
+        {!!formErrors?.email && (
+          <InputLabel sx={{ color: colors.redPrimary }}>{formErrors?.email}</InputLabel>
+        )}
       </Box>
     </Stack>
   );

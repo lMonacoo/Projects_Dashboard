@@ -32,6 +32,7 @@ export interface CustomDialogTitleProps {
 
 export interface CustomDialogContentUserProps {
   formValues: DialogFormValuesUser;
+  formErrors: { email?: string };
   setFormValues(data: DialogFormValuesUser): void;
 }
 

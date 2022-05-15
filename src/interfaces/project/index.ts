@@ -9,4 +9,5 @@ export interface IProject {
 
 export interface IProjectSlice {
   allProjects: IProject[];
+  filteredProjects: IProject[];
 }
