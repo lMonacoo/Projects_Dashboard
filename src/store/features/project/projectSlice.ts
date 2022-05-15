@@ -19,6 +19,12 @@ const projectSlice = createSlice({
 
       state.allProjects.push({ ...action.payload, id: getBiggerId + 1 });
     },
+    editProject(state, action: PayloadAction<IProject>) {
+      const projectsWithoutEdited = state.allProjects.filter(
+        project => project.id !== action.payload.id
+      );
+      state.allProjects = [...projectsWithoutEdited, action.payload];
+    },
     removeProject(state, action: PayloadAction<number>) {
       const filteredProjects = state.allProjects.filter(project => project.id !== action.payload);
       state.allProjects = filteredProjects;
@@ -26,5 +32,5 @@ const projectSlice = createSlice({
   }
 });
 
-export const { addProject, removeProject } = projectSlice.actions;
+export const { addProject, editProject, removeProject } = projectSlice.actions;
 export default projectSlice.reducer;

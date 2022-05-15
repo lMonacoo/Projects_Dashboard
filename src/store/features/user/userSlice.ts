@@ -22,8 +22,11 @@ const userSlice = createSlice({
     addUser(state, action: PayloadAction<Omit<IUsers, 'id'>>) {
       const allExistentIds = getPropertyInArray<IUsers>(state.allUsers, 'id') as number[];
       const getBiggerId = findBiggerNumberInArray(allExistentIds);
-
-      state.allUsers.push({ ...action.payload, id: getBiggerId + 1 });
+      state.allUsers.unshift({ ...action.payload, id: getBiggerId + 1 });
+    },
+    editUser(state, action: PayloadAction<IUsers>) {
+      const usersWithoutEdited = state.allUsers.filter(user => user.id !== action.payload.id);
+      state.allUsers = [action.payload, ...usersWithoutEdited];
     },
     removeUser(state, action: PayloadAction<IUsers['id']>) {
       const filteredUsers = state.allUsers.filter(user => user.id !== action.payload);
@@ -32,5 +35,5 @@ const userSlice = createSlice({
   }
 });
 
-export const { login, logout, addUser, removeUser } = userSlice.actions;
+export const { login, logout, addUser, editUser, removeUser } = userSlice.actions;
 export default userSlice.reducer;
