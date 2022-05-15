@@ -3,11 +3,13 @@ import { IUsers } from '~/interfaces/users';
 export type VariantDialog = 'users' | 'projects';
 
 export interface DialogFormValuesUser {
+  id?: number;
   name: string;
   email: string;
 }
 
 export interface DialogFormValuesProject {
+  id?: number;
   name: string;
   owner: IUsers;
   description: string;
