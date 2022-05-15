@@ -1,7 +1,6 @@
-// import LoginForm from './login-form/login-form';
-// import Product from './product/product';
-// import RoutesLayout from './routes-layout/routes-layout';
-// import SideMenu from './sidemenu/sidemenu';
+import { DashboardRecentProjects } from './dahsboardRecentProjects';
+import { DashboardDialog } from './dashboardDialog';
+import { DashboardHeader } from './dashboardHeader';
+import { DashboardViewUsers } from './dashboardViewUsers';
 
-// export { LoginForm, Product, RoutesLayout, SideMenu };
-// export * from './cmh-components';
+export { DashboardHeader, DashboardRecentProjects, DashboardDialog, DashboardViewUsers };
