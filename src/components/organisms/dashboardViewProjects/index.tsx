@@ -14,7 +14,7 @@ import { useAppSelector } from '~/hooks';
 
 export const DashboardViewProjects = () => {
   const { colors } = useTheme();
-  const { allProjects } = useAppSelector(state => state.project);
+  const { filteredProjects } = useAppSelector(state => state.project);
 
   const headerTextStles = {
     color: colors.greenTertiary,
@@ -62,7 +62,7 @@ export const DashboardViewProjects = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {allProjects.map(project => (
+          {filteredProjects.map(project => (
             <ProjectRow key={project.id} project={project} />
           ))}
         </TableBody>

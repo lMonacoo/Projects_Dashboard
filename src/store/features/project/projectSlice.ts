@@ -6,7 +6,8 @@ import { findBiggerNumberInArray, getPropertyInArray } from '~/utils';
 import initialProjects from './mock';
 
 const initialState: IProjectSlice = {
-  allProjects: initialProjects
+  allProjects: initialProjects,
+  filteredProjects: initialProjects
 };
 
 const projectSlice = createSlice({
@@ -28,9 +29,28 @@ const projectSlice = createSlice({
     removeProject(state, action: PayloadAction<number>) {
       const filteredProjects = state.allProjects.filter(project => project.id !== action.payload);
       state.allProjects = filteredProjects;
+    },
+    filterProjects(state, action: PayloadAction<string>) {
+      const filteredProjects = state.allProjects.filter(project => {
+        const stringToFind = action.payload.toLowerCase();
+        return (
+          project.name.toLowerCase().includes(stringToFind) ||
+          project.description.toLowerCase().includes(stringToFind)
+        );
+      });
+
+      const sortedFilteredProjects = filteredProjects.sort((firstProj, secondProj) => {
+        if (firstProj.name < secondProj.name || firstProj.description < secondProj.description)
+          return -1;
+        if (firstProj.name > secondProj.name || firstProj.description > secondProj.description)
+          return 1;
+        return 0;
+      });
+
+      state.filteredProjects = sortedFilteredProjects.reverse();
     }
   }
 });
 
-export const { addProject, editProject, removeProject } = projectSlice.actions;
+export const { addProject, editProject, removeProject, filterProjects } = projectSlice.actions;
 export default projectSlice.reducer;

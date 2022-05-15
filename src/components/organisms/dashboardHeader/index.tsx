@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import LogoutIcon from '@mui/icons-material/Logout';
 import SearchIcon from '@mui/icons-material/Search';
 import Fab from '@mui/material/Fab';
@@ -9,14 +11,22 @@ import { useTheme } from 'styled-components';
 
 import { HeaderContainer } from '~/components/organisms/dashboardHeader/styles';
 import { useAppDispatch } from '~/hooks';
-import { logout } from '~/store';
+import { filterProjects, logout } from '~/store';
+import { debounceFunction } from '~/utils';
 
 export const DashboardHeader = () => {
   const { colors } = useTheme();
   const dispatch = useAppDispatch();
+  const [filterInput, setFilterInput] = useState('');
 
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleFilterProjects = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.currentTarget.value;
+    setFilterInput(inputValue);
+    debounceFunction(() => dispatch(filterProjects(inputValue)), 1000);
   };
 
   return (
@@ -53,8 +63,8 @@ export const DashboardHeader = () => {
             border: `1px solid ${colors.greenTertiary}`
           }
         }}
-        // value={formValues.password}
-        // onChange={handleInputChange}
+        value={filterInput}
+        onChange={handleFilterProjects}
         name='password'
         placeholder='Search for a project'
         endAdornment={
