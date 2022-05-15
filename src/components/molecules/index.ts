@@ -1,3 +1,4 @@
+import { DashboardShowcaseHeader } from './dashboardShowcaseHeader';
 import { SpeedDialTooltipOpen } from './SpeedDialTooltipOpen';
 
-export { SpeedDialTooltipOpen };
+export { SpeedDialTooltipOpen, DashboardShowcaseHeader };
