@@ -8,29 +8,39 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { useTheme } from 'styled-components';
 
-import { useAppSelector } from '~/hooks';
+import { DashboardShowcaseHeader } from '~/components/molecules';
+import { useAppDispatch, useAppSelector } from '~/hooks';
+import { IProject } from '~/interfaces';
+import { removeProject, showDialog, showDialogEditProject } from '~/store';
 
 const QUANTITY_OF_LAST_PROJECTS_TO_SHOW = 4;
 
 export const DashboardRecentProjects = () => {
   const { colors } = useTheme();
   const { allProjects } = useAppSelector(state => state.project);
+  const dispatch = useAppDispatch();
 
   const lastProjectsChanged = allProjects.slice(-QUANTITY_OF_LAST_PROJECTS_TO_SHOW).reverse();
 
+  const handleDeleteProject = (project: IProject) => {
+    dispatch(removeProject(project.id));
+  };
+
+  const handleEditProject = (project: IProject) => {
+    dispatch(showDialogEditProject(project));
+  };
+
+  const handleCreateProject = () => {
+    dispatch(showDialog('projects'));
+  };
+
   return (
     <Paper elevation={3} sx={{ pb: 5, pl: 3, pr: 3, pt: 2 }}>
-      <Typography
-        sx={{
-          fontWeight: 700,
-          color: colors.greenTertiary,
-          fontSize: '1.5rem',
-          textTransform: 'uppercase',
-          mb: 1.5
-        }}
-      >
-        Recent Projects
-      </Typography>
+      <DashboardShowcaseHeader
+        title='Recent Projects'
+        buttonLabel='Create Project'
+        buttonCallback={handleCreateProject}
+      />
 
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 16 }}>
         {lastProjectsChanged.map(project => {
@@ -53,6 +63,7 @@ export const DashboardRecentProjects = () => {
                 </CardContent>
                 <CardActions>
                   <Button
+                    onClick={() => handleEditProject(project)}
                     variant='outlined'
                     sx={{
                       borderColor: colors.greenSuccess,
@@ -67,6 +78,7 @@ export const DashboardRecentProjects = () => {
                     Edit
                   </Button>
                   <Button
+                    onClick={() => handleDeleteProject(project)}
                     variant='outlined'
                     sx={{
                       borderColor: colors.redPrimary,

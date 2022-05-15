@@ -1,10 +1,11 @@
 import FaceIcon from '@mui/icons-material/Face';
-import { Chip, Paper, Stack, Typography } from '@mui/material';
+import { Chip, Paper, Stack } from '@mui/material';
 import { useTheme } from 'styled-components';
 
+import { DashboardShowcaseHeader } from '~/components/molecules';
 import { useAppDispatch, useAppSelector } from '~/hooks';
 import { IUsers } from '~/interfaces';
-import { removeUser } from '~/store';
+import { removeUser, showDialog, showDialogEditUser } from '~/store';
 
 export const DashboardViewUsers = () => {
   const { colors } = useTheme();
@@ -35,6 +36,8 @@ export const DashboardViewUsers = () => {
     fontSize: 11,
     color: colors.white,
     backgroundColor: colors.greenTertiary,
+    '&:hover': { backgroundColor: colors.greenSecondary },
+    '&:focus': { backgroundColor: colors.greenSecondary },
     '& .MuiSvgIcon-root': { fill: colors.white, fontSize: 20 },
     '& .MuiSvgIcon-root:hover': { fill: colors.greenPrimary }
   };
@@ -43,19 +46,21 @@ export const DashboardViewUsers = () => {
     dispatch(removeUser(user.id));
   };
 
+  const handleCreateUser = () => {
+    dispatch(showDialog('users'));
+  };
+
+  const handleEditUser = (user: IUsers) => {
+    dispatch(showDialogEditUser(user));
+  };
+
   return (
-    <Paper elevation={3} sx={{ p: 3, pb: 2, pt: 2 }}>
-      <Typography
-        sx={{
-          fontWeight: 700,
-          color: colors.greenTertiary,
-          fontSize: '1.5rem',
-          textTransform: 'uppercase',
-          mb: 1.5
-        }}
-      >
-        Users List
-      </Typography>
+    <Paper elevation={3} sx={{ p: 3, pb: 1, pt: 2 }}>
+      <DashboardShowcaseHeader
+        title='Users List'
+        buttonLabel='Create User'
+        buttonCallback={handleCreateUser}
+      />
 
       <Stack direction={'row'} spacing={1} sx={stackStyles}>
         {allUsers.map(user => {
@@ -66,6 +71,7 @@ export const DashboardViewUsers = () => {
               icon={<FaceIcon sx={{ fill: colors.white, fontSize: 20 }} />}
               label={user.name}
               onDelete={() => handleDeleteUser(user)}
+              onClick={() => handleEditUser(user)}
             />
           );
         })}
