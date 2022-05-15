@@ -11,7 +11,6 @@ export const Routes = () => {
       {/* PROTECTED */}
       <Route element={<ProtectedRoutes />}>
         <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
-
         <Route path='*' element={<Navigate to={ROUTES.DASHBOARD} replace={true} />} />
       </Route>
 

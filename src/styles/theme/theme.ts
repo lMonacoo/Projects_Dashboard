@@ -12,7 +12,7 @@ const colors = {
   redPrimary: '#D64747',
   greenSuccess: '#289D59',
   transparent: 'transparent',
-  bg: 'rgba(172, 224, 234, 0.2)'
+  bg: '#ace0ea33'
 };
 
 type Colors = typeof colors;

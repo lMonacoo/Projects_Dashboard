@@ -27,8 +27,9 @@ export const SpeedDialTooltipOpen = ({ actions }: SpeedDialTooltipOpenProps) => 
       sx={{
         position: 'fixed',
         bottom: 16,
-        right: 16,
-        '& .MuiSpeedDialIcon-icon': { fill: colors.white },
+        right: '2rem',
+        '& .MuiSpeedDialIcon-root': { display: 'flex', height: '100%', alignItems: 'center' },
+        '& .MuiSpeedDialIcon-icon': { fill: colors.white, height: 40, width: 40 },
         '& > .MuiButtonBase-root': { backgroundColor: colors.greenTertiary },
         '& > .MuiButtonBase-root:hover': { backgroundColor: colors.greenTertiary }
       }}

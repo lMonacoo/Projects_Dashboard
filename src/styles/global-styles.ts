@@ -8,7 +8,6 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     outline: none;
     text-decoration: none;
-    color: ${({ theme }) => theme.colors.black};
 }
 
 html {
@@ -18,7 +17,6 @@ html {
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: ${({ theme }) => theme.colors.greenPrimary};
     min-height: 100vh;
 }
 
