@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { CURRENT_USER_KEY } from '~/constants';
 import { ILocalUser, IUsers, IUserSlice } from '~/interfaces';
 import initialUsers from '~/store/features/user/mock';
 import { getPropertyInArray, findBiggerNumberInArray } from '~/utils';
@@ -15,8 +16,12 @@ const userSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<ILocalUser>) => {
       state.currentUser = action.payload;
+      const isUserKeepConnected = action.payload?.keepConnected;
+      if (isUserKeepConnected)
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(action.payload));
     },
     logout: state => {
+      if (state.currentUser?.keepConnected) localStorage.removeItem(CURRENT_USER_KEY);
       state.currentUser = null;
     },
     addUser(state, action: PayloadAction<Omit<IUsers, 'id'>>) {
