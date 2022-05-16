@@ -5,8 +5,7 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"],
-      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
+      "~/*": ["./src/*"]
     }
   },
   "include": ["vite.config.ts"]

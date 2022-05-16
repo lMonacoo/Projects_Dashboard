@@ -16,7 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "jest.setup.ts"],
+  "include": ["src", "jest.setup.ts", "fileMock.js"],
   "exclude": ["@emotion/styled"],
   "extends": "./tsconfig.node.json"
 }

@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "lint": "eslint ./ --color",
-    "lintFix": "eslint ./ --fix"
+    "lintFix": "eslint ./ --fix",
+    "test": "jest --env=jsdom"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -40,6 +41,10 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@commitlint/cli": "^16.2.3",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^14.2.0",
+    "@types/jest": "^27.5.1",
     "@types/node": "^17.0.24",
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.0",
