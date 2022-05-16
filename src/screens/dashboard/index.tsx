@@ -1,53 +1,85 @@
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import LogoutIcon from '@mui/icons-material/Logout';
-import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import Typography from '@mui/material/Typography';
-import { useTheme } from 'styled-components';
+import Stack from '@mui/material/Stack';
+import styled, { useTheme } from 'styled-components';
 
 import { SpeedDialTooltipOpen } from '~/components/molecules';
-import { useAppDispatch } from '~/hooks';
-import { logout } from '~/store';
+import {
+  DashboardDialog,
+  DashboardHeader,
+  DashboardRecentProjects,
+  DashboardViewProjects,
+  DashboardViewUsers
+} from '~/components/organisms';
+import { useAppDispatch, useAppSelector } from '~/hooks';
+import { DialogFormValues, IProject, IUsers } from '~/interfaces';
+import { addProject, addUser, editProject, editUser, resetDialog, showDialog } from '~/store';
+
+const MainDashboardContainer = styled.main`
+  width: 100%;
+  height: 100vh;
+  background: ${props => props.theme.colors.bg};
+`;
 
 export const Dashboard = () => {
-  const { colors } = useTheme();
+  const { dialogVariant } = useAppSelector(state => state.dashboard);
   const dispatch = useAppDispatch();
+  const { colors } = useTheme();
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleCloseDialog = () => {
+    dispatch(resetDialog());
   };
 
-  return (
-    <Box sx={{ width: '100vw', height: '100vh' }}>
-      <h1>DASHBOARD</h1>
-      <Fab
-        onClick={handleLogout}
-        variant='extended'
-        size='medium'
-        color='primary'
-        aria-label='logout'
-      >
-        <Typography sx={{ fontWeight: 700, color: colors.white }} variant='body1'>
-          Logout
-        </Typography>
-        <LogoutIcon sx={{ ml: 1 }} style={{ fill: 'white', fontSize: 22 }} />
-      </Fab>
+  const handleSubmitDialog = (formData: DialogFormValues) => {
+    const isExistentRegister = formData?.id !== undefined;
+    if (dialogVariant === 'users') {
+      dispatch(
+        isExistentRegister ? editUser(formData as IUsers) : addUser(formData as Omit<IUsers, 'id'>)
+      );
+    }
+    if (dialogVariant === 'projects') {
+      dispatch(
+        isExistentRegister
+          ? editProject(formData as IProject)
+          : addProject(formData as Omit<IProject, 'id'>)
+      );
+    }
+    handleCloseDialog();
+  };
 
-      <SpeedDialTooltipOpen
-        actions={[
-          {
-            name: 'New User',
-            icon: <GroupAddIcon sx={{ fill: colors.greenTertiary }} />,
-            callback: () => console.log('new user')
-          },
-          {
-            name: 'New Project',
-            icon: <BookmarkAddIcon sx={{ fill: colors.greenTertiary }} />,
-            callback: () => console.log('new Project')
-          }
-        ]}
-      />
-    </Box>
+  const SpeedDialActions = [
+    {
+      name: 'New User',
+      icon: <GroupAddIcon sx={{ fill: colors.greenTertiary }} />,
+      callback: () => dispatch(showDialog('users'))
+    },
+    {
+      name: 'New Project',
+      icon: <BookmarkAddIcon sx={{ fill: colors.greenTertiary }} />,
+      callback: () => dispatch(showDialog('projects'))
+    }
+  ];
+
+  return (
+    <MainDashboardContainer>
+      <DashboardHeader />
+
+      <Stack sx={{ p: 3 }} direction='column' spacing={2}>
+        <DashboardRecentProjects />
+        <DashboardViewUsers />
+        <DashboardViewProjects />
+      </Stack>
+
+      <SpeedDialTooltipOpen actions={SpeedDialActions} />
+
+      {dialogVariant !== 'idle' ? (
+        <DashboardDialog
+          onClose={handleCloseDialog}
+          onSubmit={handleSubmitDialog}
+          variant={dialogVariant}
+          isOpen={true}
+        />
+      ) : null}
+    </MainDashboardContainer>
   );
 };
