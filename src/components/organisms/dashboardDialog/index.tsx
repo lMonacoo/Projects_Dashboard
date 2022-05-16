@@ -30,7 +30,8 @@ export const DashboardDialog = ({ isOpen, onClose, onSubmit, variant }: Dashboar
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    if (variant === 'users') {
+    const isNewUser = userDialogData?.id === undefined && variant === 'users';
+    if (isNewUser) {
       const userData = formValues as DialogFormValuesUser;
       const hasEqualEmail = allUsers.some(user => user.email === userData.email);
       if (hasEqualEmail) return setFormErrors({ email: 'Email already exists' });

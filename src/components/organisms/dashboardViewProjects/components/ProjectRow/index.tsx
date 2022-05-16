@@ -112,7 +112,7 @@ export const ProjectRow = ({ project }: ProjectRowProps) => {
                 Description:
               </Typography>
               <Typography sx={{ color: colors.greyQuaternary, fontSize: 12, pr: 3, mb: 3 }}>
-                {project.description}
+                {project?.description ? project.description : 'No description'}
               </Typography>
               <Typography
                 gutterBottom

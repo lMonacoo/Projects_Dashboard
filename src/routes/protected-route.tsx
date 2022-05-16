@@ -5,7 +5,6 @@ import { useAppSelector } from '~/hooks';
 
 const ProtectedRoutes = (): JSX.Element => {
   const { currentUser } = useAppSelector(state => state.user);
-
   return currentUser ? <Outlet /> : <Navigate to={ROUTES.LOGIN} />;
 };
 

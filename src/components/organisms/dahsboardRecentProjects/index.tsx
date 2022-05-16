@@ -58,7 +58,7 @@ export const DashboardRecentProjects = () => {
                     {project.name}
                   </Typography>
                   <Typography noWrap sx={{ fontSize: 12 }} variant='h5'>
-                    {project.description}
+                    {project?.description ? project.description : 'No description'}
                   </Typography>
                 </CardContent>
                 <CardActions>
