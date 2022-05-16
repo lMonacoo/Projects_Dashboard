@@ -2,7 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Stack, Typography, Button } from '@mui/material';
 import { useTheme } from 'styled-components';
 
-interface DashboardShowcaseHeaderProps {
+export interface DashboardShowcaseHeaderProps {
   buttonLabel: string;
   title: string;
   buttonCallback: () => void;
@@ -43,7 +43,7 @@ export const DashboardShowcaseHeader = ({
         variant='outlined'
         sx={buttonStyles}
         size='small'
-        onClick={() => buttonCallback()}
+        onClick={buttonCallback}
       >
         {buttonLabel}
       </Button>
