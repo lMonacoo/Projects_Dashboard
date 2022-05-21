@@ -8,5 +8,5 @@ export const initialUserFormValues: DialogFormValuesUser = {
 export const initialProjectsFormValues: DialogFormValuesProject = {
   name: '',
   description: '',
-  owner: { email: '', name: '', id: 0 }
+  owner: 0
 };

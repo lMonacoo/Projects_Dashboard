@@ -27,8 +27,7 @@ export const CustomDialogContentProjects = ({
   const handleSelectChange = (e: object) => {
     const event = e as React.ChangeEvent<HTMLInputElement>;
     if (event.target && event?.target?.value) {
-      const findSelectedUserById = allUsers.find(user => user.id === Number(event.target?.value));
-      if (findSelectedUserById) setFormValues({ ...formValues, owner: findSelectedUserById });
+      setFormValues({ ...formValues, owner: Number(event.target?.value) });
     }
   };
 
@@ -52,7 +51,8 @@ export const CustomDialogContentProjects = ({
       style: {
         borderRadius: 16,
         marginTop: 5,
-        border: `1px solid ${colors.greenTertiary}`
+        border: `1px solid ${colors.greenTertiary}`,
+        height: '300px'
       }
     }
   };
@@ -87,14 +87,16 @@ export const CustomDialogContentProjects = ({
         <InputLabel htmlFor='input-owner'>Owner:</InputLabel>
         <Select
           displayEmpty
-          value={formValues.owner.id || ''}
+          value={formValues.owner ? formValues.owner : ''}
           name='owner'
           onChange={(event: object) => handleSelectChange(event)}
-          renderValue={(value: string | number) => {
+          renderValue={(value: number | string) => {
             if (!value) {
               return 'Select owner';
             }
-            return formValues.owner.name;
+            const userWithIdEqualsValue = allUsers.find(user => user.id === Number(value));
+
+            return userWithIdEqualsValue?.name;
           }}
           input={
             <Input
