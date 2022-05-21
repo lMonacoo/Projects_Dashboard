@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
+  Box,
   Collapse,
   Fab,
   IconButton,
@@ -15,17 +16,17 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
-import { Box } from '@mui/system';
 import { useTheme } from 'styled-components';
 
 import { useAppDispatch } from '~/hooks';
-import { IProject } from '~/interfaces';
+import { IProject, IUsers } from '~/interfaces';
 import { removeProject, showDialogEditProject } from '~/store';
 interface ProjectRowProps {
   project: IProject;
+  owner: IUsers;
 }
 
-export const ProjectRow = ({ project }: ProjectRowProps) => {
+export const ProjectRow = ({ project, owner }: ProjectRowProps) => {
   const { colors } = useTheme();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
@@ -60,7 +61,7 @@ export const ProjectRow = ({ project }: ProjectRowProps) => {
         </TableCell>
         <TableCell sx={mainContentStyles}>{project.name}</TableCell>
         <TableCell sx={mainContentStyles} align='left'>
-          {project.owner.name}
+          {owner?.name || 'unknown'}
         </TableCell>
         <TableCell sx={mainContentStyles} align='center'>
           <Fab
@@ -94,6 +95,7 @@ export const ProjectRow = ({ project }: ProjectRowProps) => {
           </Fab>
         </TableCell>
       </TableRow>
+
       <TableRow>
         <TableCell
           sx={{
@@ -122,7 +124,7 @@ export const ProjectRow = ({ project }: ProjectRowProps) => {
               </Typography>
               <Table size='small' aria-label='purchases'>
                 <TableHead>
-                  <TableRow>
+                  <TableCell>
                     <TableCell sx={{ borderBottom: `2px solid ${colors.greenTertiary}` }}>
                       ID
                     </TableCell>
@@ -132,14 +134,18 @@ export const ProjectRow = ({ project }: ProjectRowProps) => {
                     <TableCell sx={{ borderBottom: `2px solid ${colors.greenTertiary}` }}>
                       Email
                     </TableCell>
-                  </TableRow>
+                  </TableCell>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell sx={mainContentStyles}>{project.owner.id}</TableCell>
-                    <TableCell sx={mainContentStyles}>{project.owner.name}</TableCell>
-                    <TableCell sx={mainContentStyles}>{project.owner.email}</TableCell>
-                  </TableRow>
+                  <TableCell>
+                    <TableCell sx={mainContentStyles}>{owner?.id || 'not have owner id'}</TableCell>
+                    <TableCell sx={mainContentStyles}>
+                      {owner?.name || 'not have owner name'}
+                    </TableCell>
+                    <TableCell sx={mainContentStyles}>
+                      {owner?.email || 'not have owner email'}
+                    </TableCell>
+                  </TableCell>
                 </TableBody>
               </Table>
             </Box>

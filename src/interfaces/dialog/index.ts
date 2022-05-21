@@ -1,5 +1,3 @@
-import { IUsers } from '~/interfaces/users';
-
 export type VariantDialog = 'users' | 'projects';
 
 export interface DialogFormValuesUser {
@@ -11,7 +9,7 @@ export interface DialogFormValuesUser {
 export interface DialogFormValuesProject {
   id?: number;
   name: string;
-  owner: IUsers;
+  owner: number;
   description: string;
 }
 
