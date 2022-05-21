@@ -12,8 +12,8 @@ import ProtectedRoutes from '~/routes/protected-route';
 import PublicRoutes from '~/routes/public-route';
 import { Dashboard, Login } from '~/screens';
 import { loadFirstProjectsPayload, loadFirstUsersPayload, login } from '~/store';
-import initialProjects from '~/store/features/project/mock';
-import initialUsers from '~/store/features/user/mock';
+import * as JsonProjectsData from '~/store/features/project/projects.json';
+import * as JsonUsersData from '~/store/features/user/users.json';
 
 export const Routes = () => {
   const dispatch = useAppDispatch();
@@ -27,13 +27,21 @@ export const Routes = () => {
 
   useEffect(() => {
     const usersStoraged = localStorage.getItem(COLLECTION_USERS_KEY);
-    dispatch(loadFirstUsersPayload(usersStoraged ? JSON.parse(usersStoraged) : initialUsers));
+    const convertInitialJSONdata = JSON.parse(JSON.stringify(JsonUsersData)).default;
+
+    dispatch(
+      loadFirstUsersPayload(usersStoraged ? JSON.parse(usersStoraged) : convertInitialJSONdata)
+    );
   }, [dispatch]);
 
   useEffect(() => {
     const projectsStoraged = localStorage.getItem(COLLECTION_PROJECTS_KEY);
+    const convertInitialJSONdata = JSON.parse(JSON.stringify(JsonProjectsData)).default;
+
     dispatch(
-      loadFirstProjectsPayload(projectsStoraged ? JSON.parse(projectsStoraged) : initialProjects)
+      loadFirstProjectsPayload(
+        projectsStoraged ? JSON.parse(projectsStoraged) : convertInitialJSONdata
+      )
     );
   }, [dispatch]);
 
